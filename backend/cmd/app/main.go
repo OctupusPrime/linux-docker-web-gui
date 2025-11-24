@@ -4,6 +4,7 @@ import (
 	testHandler "linux-docker-web-gui/internal/test/handler"
 	testRepo "linux-docker-web-gui/internal/test/repository"
 	testService "linux-docker-web-gui/internal/test/service"
+	webAppHandler "linux-docker-web-gui/internal/web-app/handler"
 	"linux-docker-web-gui/pkg/db"
 	"log"
 	"net/http"
@@ -26,6 +27,9 @@ func main() {
 	tService := testService.NewService(tRepo)
 	tHandler := testHandler.NewHandler(tService)
 	tHandler.RegisterRoutes(mux)
+
+	webAppHandler := webAppHandler.NewHandler("/Users/mihailsokil/Desktop/my-projects/linux-docker-web-gui/frontend/dist", "index.html")
+	webAppHandler.RegisterRoutes(mux)
 
 	srv := &http.Server{
 		Addr:         ":8080",

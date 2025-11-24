@@ -15,7 +15,7 @@ func NewHandler(service *service.TestService) *TestHandler {
 }
 
 func (h *TestHandler) RegisterRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("GET /test", h.GetTest)
+	mux.HandleFunc("GET /api/test", h.GetTest)
 }
 
 func (h *TestHandler) GetTest(w http.ResponseWriter, r *http.Request) {
