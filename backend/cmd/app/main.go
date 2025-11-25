@@ -9,11 +9,18 @@ import (
 	"linux-docker-web-gui/pkg/middleware"
 	"log"
 	"net/http"
+	"os"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	database, err := db.New("/Users/mihailsokil/Desktop/my-projects/linux-docker-web-gui/temp/database.db")
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	database, err := db.New(os.Getenv("DATABASE_PATH"))
 	if err != nil {
 		log.Fatal("Failed to init db:", err)
 	}
@@ -29,7 +36,7 @@ func main() {
 	tHandler := testHandler.NewHandler(tService)
 	tHandler.RegisterRoutes(mux, middleware.Logger)
 
-	webAppHandler := webAppHandler.NewHandler("/Users/mihailsokil/Desktop/my-projects/linux-docker-web-gui/frontend/dist", "index.html")
+	webAppHandler := webAppHandler.NewHandler(os.Getenv("FRONTEND_PATH"), "index.html")
 	webAppHandler.RegisterRoutes(mux)
 
 	srv := &http.Server{
