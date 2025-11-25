@@ -16,7 +16,7 @@ func NewHandler(staticPath, indexPath string) *WebAppHandler {
 }
 
 func (h *WebAppHandler) RegisterRoutes(mux *http.ServeMux) {
-	mux.Handle("/", http.HandlerFunc(h.ServeSPA))
+	mux.HandleFunc("/", h.ServeSPA)
 }
 
 func (h *WebAppHandler) ServeSPA(w http.ResponseWriter, r *http.Request) {

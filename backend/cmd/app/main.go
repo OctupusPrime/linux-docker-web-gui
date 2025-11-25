@@ -6,6 +6,7 @@ import (
 	testService "linux-docker-web-gui/internal/test/service"
 	webAppHandler "linux-docker-web-gui/internal/web-app/handler"
 	"linux-docker-web-gui/pkg/db"
+	"linux-docker-web-gui/pkg/middleware"
 	"log"
 	"net/http"
 	"time"
@@ -26,7 +27,7 @@ func main() {
 	tRepo := testRepo.NewSQLiteRepository(database.DB)
 	tService := testService.NewService(tRepo)
 	tHandler := testHandler.NewHandler(tService)
-	tHandler.RegisterRoutes(mux)
+	tHandler.RegisterRoutes(mux, middleware.Logger)
 
 	webAppHandler := webAppHandler.NewHandler("/Users/mihailsokil/Desktop/my-projects/linux-docker-web-gui/frontend/dist", "index.html")
 	webAppHandler.RegisterRoutes(mux)

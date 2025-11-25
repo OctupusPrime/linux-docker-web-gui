@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"linux-docker-web-gui/internal/test/service"
+	"linux-docker-web-gui/pkg/middleware"
 	"net/http"
 )
 
@@ -14,8 +15,10 @@ func NewHandler(service *service.TestService) *TestHandler {
 	return &TestHandler{service: service}
 }
 
-func (h *TestHandler) RegisterRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("GET /api/test", h.GetTest)
+func (h *TestHandler) RegisterRoutes(mux *http.ServeMux, mws ...middleware.Middleware) {
+	mwsStack := middleware.CreateStack(mws...)
+
+	mux.Handle("GET /api/test", mwsStack(http.HandlerFunc(h.GetTest)))
 }
 
 func (h *TestHandler) GetTest(w http.ResponseWriter, r *http.Request) {
