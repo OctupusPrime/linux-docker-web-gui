@@ -15,7 +15,7 @@ You can install the application by running the `install.sh` script.
 **Download the installation script:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/OctupusPrime/linux-docker-web-gui/master/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/OctupusPrime/linux-docker-web-gui/master/scripts/install.sh | sudo bash
 ```
 
 ## Uninstall
